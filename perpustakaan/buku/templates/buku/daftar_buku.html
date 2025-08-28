@@ -1,0 +1,86 @@
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+
+  .auth-links {
+    margin-bottom: 20px;
+    text-align: right;
+  }
+
+  .auth-links a {
+    color: #2980b9;
+    text-decoration: none;
+    margin-left: 10px;
+    font-weight: bold;
+  }
+
+  .auth-links a:hover {
+    text-decoration: underline;
+  }
+
+  .buku-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .buku-item {
+    background-color: #ecf0f1;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .buku-item a {
+    text-decoration: none;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  .stok {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+</style>
+
+<div class="container">
+  <h1>Daftar Buku</h1>
+
+  <div class="auth-links">
+    <a href="{% url 'login' %}">Login</a> |
+    <a href="{% url 'signup' %}">Registrasi</a> |
+    <a href="{% url 'daftar_peminjaman_user' %}">Daftar Peminjaman</a>
+  </div>
+
+  <ul class="buku-list">
+    {% for buku in buku_list %} 
+      <li class="buku-item">
+        <a href="{% url 'detail_buku' buku.id %}">{{ buku.judul }}</a>
+        <span class="stok">Stok: {{ buku.stok }}</span>
+      </li>
+    {% empty %}
+      <li>Tidak ada buku tersedia.</li>
+    {% endfor %}
+  </ul>
+</div>
+

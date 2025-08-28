@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Peminjaman</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 26px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        li {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        li:hover {
+            transform: scale(1.01);
+        }
+
+        li form {
+            margin: 0;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        .kosong {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #3498db;
+            font-size: 16px;
+            border: 1px solid #3498db;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .back-link a:hover {
+            background-color: #3498db;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>📚 Daftar Buku yang Sedang Dipinjam</h2>
+
+    <ul>
+        {% for pinjam in peminjaman_list %}
+            <li>
+                <span>
+                    <strong>{{ pinjam.buku.judul }}</strong><br>
+                    Dipinjam pada: {{ pinjam.tanggal_pinjam|date:"d M Y" }}
+                </span>
+                <form action="{% url 'hapus_peminjaman' pinjam.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return confirm('Apakah kamu ingin mengembalikan buku?')">Kembalikan</button>
+                </form>
+            </li>
+        {% empty %}
+            <li class="kosong">Tidak ada buku yang sedang dipinjam.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="back-link">
+        <a href="{% url 'daftar_buku' %}">← Kembali ke Daftar Buku</a>
+    </div>
+
+</body>
+</html>
+
+
+

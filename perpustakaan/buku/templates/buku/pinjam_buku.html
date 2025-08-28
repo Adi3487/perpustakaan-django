@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pinjam Buku</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .error {
+      color: #e74c3c;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .book-info {
+      text-align: center;
+    }
+
+    .book-info strong {
+      font-size: 1.2rem;
+      color: #34495e;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .back-link a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Pinjam Buku</h1>
+
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <div class="book-info">
+      <p><strong>{{ buku.judul }}</strong></p>
+      <p>Stok saat ini: {{ buku.stok }}</p>
+    </div>
+
+    <div class="back-link">
+      <a href="{% url 'daftar_buku' %}">← Kembali ke Daftar Buku</a>
+    </div>
+  </div>
+</body>
+</html>

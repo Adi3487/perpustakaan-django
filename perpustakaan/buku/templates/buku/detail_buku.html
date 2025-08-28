@@ -1,0 +1,157 @@
+<style>
+  .detail-buku {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+  }
+
+  .detail-buku h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 2rem;
+  }
+
+  .detail-buku p {
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+  }
+
+  .detail-buku .penulis,
+  .detail-buku .stok {
+    font-weight: bold;
+    color: #34495e;
+  }
+
+  .detail-buku form button {
+    background-color: #2980b9;
+    color: white;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .detail-buku form button:hover {
+    background-color: #1c5980;
+  }
+
+  .detail-buku .login-pesan {
+    font-size: 1rem;
+    color: #e74c3c;
+  }
+
+  .detail-buku .login-pesan a {
+    color: #2980b9;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .detail-buku .login-pesan a:hover {
+    text-decoration: underline;
+  }
+
+  .detail-buku .error-msg {
+    color: red;
+    font-weight: bold;
+    margin-top: 15px;
+  }
+
+  .detail-buku .messages {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+  }
+
+  .detail-buku .messages li {
+    padding: 12px 16px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .detail-buku .messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .detail-buku .messages li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  .detail-buku .messages li.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+  }
+
+  .detail-buku .messages li.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+  }
+
+  .kembali-link {
+    display: block;
+    text-align: center;
+    margin: 20px auto;
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+  }
+
+  .kembali-link a {
+    color: #2980b9;
+    text-decoration: none;
+  }
+
+  .kembali-link a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="detail-buku">
+  <h1>{{ buku.judul }}</h1>
+  <p>{{ buku.deskripsi }}</p>
+  <p class="penulis">Penulis: {{ buku.penulis }}</p>
+  <p class="stok">Stok: {{ buku.stok }}</p>
+
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if user.is_authenticated %}
+    <form action="{% url 'pinjam_buku' buku.id %}" method="post">
+      {% csrf_token %}
+      <button type="submit">Pinjam Buku</button>
+    </form>
+  {% else %}
+    <p class="login-pesan">
+      Silakan <a href="{% url 'login' %}?next={{ request.path }}">Login</a> atau
+      <a href="{% url 'signup' %}">Registrasi</a> untuk meminjam buku.
+    </p>
+  {% endif %}
+
+  {% if error %}
+    <p class="error-msg">{{ error }}</p>
+  {% endif %}
+</div>
+
+<div class="kembali-link">
+  <a href="{% url 'daftar_buku' %}">← Kembali ke Daftar Buku</a>
+</div>
